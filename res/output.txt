@@ -1,0 +1,33 @@
+Total Words: 10
+Unique Words: 4
+Stop Words: 6
+
+10 Most Frequent
+flames : 1
+gone : 1
+lingers : 1
+pain : 1
+flames : 1
+flames : 1
+flames : 1
+flames : 1
+flames : 1
+flames : 1
+
+10 Least Frequent
+flames : 1
+gone : 1
+lingers : 1
+pain : 1
+flames : 1
+flames : 1
+flames : 1
+flames : 1
+flames : 1
+flames : 1
+
+All
+flames : 1
+gone : 1
+lingers : 1
+pain : 1
