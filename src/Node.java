@@ -4,38 +4,33 @@
  * 
  * @param <T> Generic type of data
  */
+
 public class Node<T extends Comparable<T>> {
     private T data;
-    private Node<T> left;
-    private Node<T> right;
+    private Node<T> next;
 
-    public Node(T data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
+    public Node(T d) {
+        data = d;
+        next = null;
     }
 
     public T getData() {
         return data;
     }
 
-    public Node<T> getLeft() {
-        return left;
+    public void setData(T o) {
+        data = o;
     }
 
-    public Node<T> getRight() {
-        return right;
+    public Node<T> getNext() {
+        return next;
     }
 
-    public void setLeft(Node<T> left) {
-        this.left = left;
-    }
-
-    public void setRight(Node<T> right) {
-        this.right = right;
+    public void setNext(Node<T> n) {
+        next = n;
     }
 
     public String toString() {
-        return "Node " + data.toString();
+        return "Node " + getData().toString();
     }
 }
