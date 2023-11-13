@@ -15,7 +15,14 @@ import java.util.Scanner;
  *
  */
 public class A3 {
+    /**
+     * Lists (trees) of words. Ordered by - Alphabetic, Frequency, and then Length
+     */
+    private BST<Token> wordsByNaturalOrder = new BST<Token>();
+    private BST<Token> wordsByFreqDesc = new BST<Token>(Token.CompFreqDesc);
+    private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
 
+    // 103 stopwords in list
     List<String> stopWordList = new ArrayList<>(List.of(
             "a", "about", "all", "am", "an", "and", "any", "are", "as", "at",
             "be", "been", "but", "by", "can", "cannot", "could", "did", "do", "does",
@@ -28,10 +35,6 @@ public class A3 {
             "where", "which", "while", "who", "whom", "why", "will", "you", "your", "up", "down", "left", "right",
             "man", "woman", "would", "should", "dont", "after", "before", "im", "men"));
 
-    private BST<Token> wordsByNaturalOrder = new BST<Token>();
-    private BST<Token> wordsByFreqDesc = new BST<Token>(Token.CompFreqDesc);
-    private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
-
     // SLL<Token> orderedTkList = new SLL<Token>();
     // SLL<Token> mostFrequent = new SLL<Token>(mFcomparator);
     // SLL<Token> leastFrequent = new SLL<Token>(lFcomparator);
@@ -39,6 +42,8 @@ public class A3 {
 
     private int wordCount = 0;
     private int stopWordCount = 0;
+
+    private Scanner scanner = new Scanner(System.in);
 
     /**
      * Reads file from txt word by word
@@ -49,50 +54,86 @@ public class A3 {
      */
     private void readFile() {
 
-        Scanner scanner = new Scanner(System.in);
-
         SLL<Token> tokenList = new SLL<Token>();
         while (scanner.hasNext()) {
 
             String word = scanner.next();
             word = word.trim().toLowerCase().replaceAll("[^a-z\\s]", "");
 
-            if (stopWordList.contains(word)) {
-                wordCount++;
-                stopWordCount++;
-            } else if (!word.isEmpty()) {
-                wordCount++;
-                Token newToken = new Token(word);
+            if (word.length() > 0) {
+                Token token = new Token(word);
+                // Check if token is already in tree
+                BST<Token>.BSTNode existingNode = wordsByNaturalOrder.find(token);
 
-                tokenList.addAt(wordCount, newToken);
+                if (existingNode != null) { // If token already in tree increase freauency
+                    existingNode.getData().increaseCount();
+                } else {
+                    wordsByNaturalOrder.add(token); // If token not in tree, add it
+                }
             }
 
         }
-        uniqueWords = getUniqueWords(tokenList);
+        // uniqueWords = getUniqueWords(tokenList);
 
-        System.out.println("Total Words: " + wordCount);
-        System.out.println("Unique Words: " + uniqueWords.size());
-        System.out.println("Stop Words: " + stopWordCount);
+        // System.out.println("Total Words: " + wordCount);
+        // System.out.println("Unique Words: " + uniqueWords.size());
+        // System.out.println("Stop Words: " + stopWordCount);
 
-        orderedTkList = orderTheList(tokenList);// use this list to make the most and least
+        // orderedTkList = orderTheList(tokenList);// use this list to make the most and
+        // least
 
-        orderLeastFreq();
-        orderMostFreq();
+        // orderLeastFreq();
+        // orderMostFreq();
 
-        System.out.println();
-        System.out.println("Most frequent");
-        printMostFreq();
+        // System.out.println();
+        // System.out.println("Most frequent");
+        // printMostFreq();
 
-        System.out.println();
-        System.out.println("Least frequent");
-        printLeastFreq();
+        // System.out.println();
+        // System.out.println("Least frequent");
+        // printLeastFreq();
 
-        System.out.println();
-        System.out.println("All: ");
-        printAllWords();
+        // System.out.println();
+        // System.out.println("All: ");
+        // printAllWords();
 
         scanner.close();
 
+    }
+
+    /**
+     * Creates the frequency and length lists
+     */
+    private void createFreqLists() {
+
+    }
+
+    /**
+     * Calculates average length of words stored in wordsByNaturalOrder tree
+     * 
+     * @return avgLength of words
+     */
+    private int avgLength() {
+        return 0;
+
+    }
+
+    /**
+     * Removes stop words from tree
+     */
+    private void removeStop() {
+
+    }
+
+    /**
+     * Calculates optimal height for a tree of size n
+     * Round to an int
+     * 
+     * @param n - size of tree
+     * @return int - optimal height of tree
+     */
+    private int optHeight(int n) {
+        return 0;
     }
 
     /**

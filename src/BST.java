@@ -5,6 +5,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BST<T extends Comparable<T>> {
+    private static final int INORDER = 1;
+    private static final int PREORDER = 2;
+    private static final int POSTORDER = 3;
+    private Queue<T> queue;
+
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
@@ -44,6 +49,7 @@ public class BST<T extends Comparable<T>> {
             return (getLeft() == null) && (getRight() == null);
         }
 
+        @Override
         public int compareTo(BSTNode otherNode) {
             return this.getData().compareTo(otherNode.getData());
         }
@@ -53,10 +59,6 @@ public class BST<T extends Comparable<T>> {
     private Comparator<T> comparator;
     private BSTNode root;
     private int size;
-
-    public interface Visit<T> {
-        void visit(T t);
-    }
 
     public BST() {
         root = null;
@@ -69,11 +71,6 @@ public class BST<T extends Comparable<T>> {
         size = 0;
     }
 
-    public Iterator<T> iterator() {
-        Iterator<T> it = new BSTIterator<T>();
-        return it;
-    }
-
     public int size() {
         return size;
     }
@@ -83,8 +80,8 @@ public class BST<T extends Comparable<T>> {
         size++;
     }
 
-    public boolean find(T data) {
-        return find(root, data);
+    public BSTNode<T> find(T data) {
+        return find(data, root);
     }
 
     public void delete(T data) {
@@ -115,18 +112,18 @@ public class BST<T extends Comparable<T>> {
         return curr;
     }
 
-    private boolean find(BSTNode curr, T data) {
+    private T find(T data, BSTNode curr) {
         if (curr == null) {
-            return false;
+            return null;
         }
-        int c = data.compareTo(curr.data);
+        int c = data.compareTo(curr.getData());
 
-        if (c < 0) {
-            return find(curr.left, data);
-        } else if (c > 0) {
-            return find(curr.right, data);
+        if (c == 0) {
+            return curr.getData();
+        } else if (c < 0) {
+            return find(data, curr.getLeft());
         } else {
-            return true;
+            return find(data, curr.getRight());
         }
     }
 
@@ -137,14 +134,14 @@ public class BST<T extends Comparable<T>> {
 
         int c = data.compareTo(curr.data);
 
-        if(c < 0 ){
-            curr.left = delete(curr.left, data)
-        } else if(c > 0){
+        if (c < 0) {
+            curr.left = delete(curr.left, data);
+        } else if (c > 0) {
             curr.right = delete(curr.right, data);
         } else {
-            if (curr.left == null){
+            if (curr.left == null) {
                 return curr.right;
-            } else if (curr.right == null){
+            } else if (curr.right == null) {
                 return curr.left;
             }
 
@@ -171,32 +168,29 @@ public class BST<T extends Comparable<T>> {
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
-    private void inOrderTraversal(BSTNode curr, LinkedList<T> list) {
-        if (curr == null) {
-            return;
-        } else {
-            inOrderTraversal(curr.left, list);
-            curr.getData();
-            inOrderTraversal(curr.right, list);
+    private void traverse(BSTNode root, int order, Visit<T> visit) {
+        if (root != null) {
+            if (order == INORDER) {
+                traverse(root.getLeft(), order, visit);
+                visit.visit(root.getData());
+                traverse(root.getRight(), order, visit);
+            } else if (order == PREORDER) {
+                visit.visit(root.getData());
+                traverse(root.getLeft(), order, visit);
+                traverse(root.getRight(), order, visit);
+            } else if (order == POSTORDER) {
+                traverse(root.getLeft(), order, visit);
+                traverse(root.getRight(), order, visit);
+                visit.visit(root.getData());
+            }
         }
-
     }
 
-    private class BSTIterator<T> implements Iterator<T>, Visit<T> {
-        private Queue<T> queue = new LinkedList<T>();
+    private class BSTIterator implements Iterator<T> {
 
-        public BSTIterator(){
-            queue.clear();
-            inOrderTraversal(root, this);
-
-            
-        }
-
-        @Override
-        public void visit(T t) {
-            if (t != null) {
-                queue.add(t);
-            }
+        public BSTIterator() {
+            queue = new LinkedList<>();
+            traverse(root, INORDER, new IteratorVisit());
         }
 
         public boolean hasNext() {
@@ -206,5 +200,13 @@ public class BST<T extends Comparable<T>> {
         public T next() {
             return queue.poll();
         }
+    }
+
+    private class IteratorVisit implements Visit<T> {
+        @Override
+        public void visit(T data) {
+            queue.add(data);
+        }
+    }
 
 }
