@@ -105,7 +105,7 @@ public class A3 {
      * Creates the frequency and length lists
      */
     private void createFreqLists() {
-
+        // TODO
     }
 
     /**
@@ -114,6 +114,7 @@ public class A3 {
      * @return avgLength of words
      */
     private int avgLength() {
+        // TODO
         return 0;
 
     }
@@ -122,7 +123,7 @@ public class A3 {
      * Removes stop words from tree
      */
     private void removeStop() {
-
+        // TODO
     }
 
     /**
@@ -133,132 +134,10 @@ public class A3 {
      * @return int - optimal height of tree
      */
     private int optHeight(int n) {
+        // TODO
         return 0;
     }
-
-    /**
-     * Used to store unique words
-     * Uses SLL.contains method to check if word is already in uniqueWords list
-     * If it isn't, word is added to the list
-     * 
-     * @param tokenList The list of token objects (words + count)
-     * @return uniqueWords One list with just unique words (no repetition)
-     */
-    public SLL<Token> getUniqueWords(SLL<Token> tokenList) {
-
-        SLL<Token> uniqueWords = new SLL<>();
-
-        Node<Token> curr = tokenList.get(0);
-        while (curr != null) {
-            Token token = curr.getData();
-
-            if (!uniqueWords.contains(token)) {
-                uniqueWords.addAt(0, token);
-            }
-
-            curr = curr.getNext();
-        }
-        return uniqueWords;
-    }
-
-    /**
-     * Order the list in alphabetical order using addInOrder method from SLL class
-     * 
-     * @param tokenList The list of token objects (words + count)
-     * @return orderedTkList The list with the elements in alphabetical order
-     */
-    private SLL<Token> orderTheList(SLL<Token> tokenList) {
-
-        SLL<Token> uniqueWords = getUniqueWords(tokenList);
-        for (int i = 0; i < uniqueWords.size(); i++) {
-            orderedTkList.addInOrder(uniqueWords.get(i).getData());
-        }
-        for (int i = 0; i < orderedTkList.size(); i++) {
-            countRepetition(tokenList, orderedTkList.get(i).getData());
-        }
-        return orderedTkList;
-    }
-
-    /**
-     * Count how many times the word repeats in the list
-     * each time it update the count from token class
-     * 
-     * @param tokenList The list of token objects (words + count
-     * @param word      One of the words in the tokenList
-     */
-    private void countRepetition(SLL<Token> tokenList, Token word) {
-
-        for (int i = 0; i < tokenList.size(); i++) {
-            if (word.compareTo(tokenList.get(i).getData()) == 0) {
-                word.increaseCount();
-            }
-        }
-    }
-
-    /**
-     * Order the list by frequency, from the most to the least frequent
-     */
-    public void orderMostFreq() {
-
-        for (int i = 0; i < orderedTkList.size(); i++) {
-            mostFrequent.addInOrder(orderedTkList.get(i).getData());
-        }
-    }
-
-    /**
-     * Order the list by frequency, from the least to the most frequent
-     */
-    public void orderLeastFreq() {
-
-        for (int i = 0; i < orderedTkList.size(); i++) {
-            leastFrequent.addInOrder(orderedTkList.get(i).getData());
-        }
-    }
-
-    /**
-     * Print in the console the list of the most frequent word
-     * but it just print until the 10th word
-     */
-    public void printMostFreq() {
-        int num;
-        if (mostFrequent.size() > 10) {
-            num = 10;
-        } else {
-            num = mostFrequent.size();
-        }
-
-        for (int i = 0; i < num; i++) {
-            System.out.println(mostFrequent.get(i).getData().format());
-        }
-
-    }
-
-    /**
-     * Print in the console the list of the least frequent word
-     * but it just print until the 10th word
-     */
-    public void printLeastFreq() {
-        int num;
-        if (leastFrequent.size() > 10) {
-            num = 10;
-        } else {
-            num = leastFrequent.size();
-        }
-
-        for (int i = 0; i < num; i++) {
-            System.out.println(leastFrequent.get(i).getData().format());
-        }
-    }
-
-    /**
-     * Print all words in the console followed by its own count (frequency)
-     */
-    private void printAllWords() {
-
-        for (int i = 0; i < orderedTkList.size(); i++) {
-            System.out.println(orderedTkList.get(i).getData().format());
-        }
-    }
+    /////
 
     /**
      * Saves the lists of words to an external text file called output.txt

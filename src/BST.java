@@ -80,7 +80,7 @@ public class BST<T extends Comparable<T>> {
         size++;
     }
 
-    public BSTNode<T> find(T data) {
+    public T find(T data) {
         return find(data, root);
     }
 
