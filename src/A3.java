@@ -63,10 +63,10 @@ public class A3 {
             if (word.length() > 0) {
                 Token token = new Token(word);
                 // Check if token is already in tree
-                BST<Token>.BSTNode existingNode = wordsByNaturalOrder.find(token);
+                Token existingNode = wordsByNaturalOrder.find(token);
 
                 if (existingNode != null) { // If token already in tree increase freauency
-                    existingNode.getData().increaseCount();
+                    existingNode.increaseCount();
                 } else {
                     wordsByNaturalOrder.add(token); // If token not in tree, add it
                 }
