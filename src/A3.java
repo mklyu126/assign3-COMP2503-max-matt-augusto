@@ -35,11 +35,6 @@ public class A3 {
             "where", "which", "while", "who", "whom", "why", "will", "you", "your", "up", "down", "left", "right",
             "man", "woman", "would", "should", "dont", "after", "before", "im", "men"));
 
-    // SLL<Token> orderedTkList = new SLL<Token>();
-    // SLL<Token> mostFrequent = new SLL<Token>(mFcomparator);
-    // SLL<Token> leastFrequent = new SLL<Token>(lFcomparator);
-    // SLL<Token> uniqueWords;
-
     private int wordCount = 0;
     private int stopWordCount = 0;
 
@@ -49,12 +44,10 @@ public class A3 {
      * Reads file from txt word by word
      * Trims word of trailing and leading blanks, converts it to lowercase, and
      * removes any punctuation/digits
-     * If word is not in stopWordList, add it to tokenList
-     * Then print the information in the console
+     * 
      */
     private void readFile() {
 
-        SLL<Token> tokenList = new SLL<Token>();
         while (scanner.hasNext()) {
 
             String word = scanner.next();
@@ -71,32 +64,9 @@ public class A3 {
                     wordsByNaturalOrder.add(token); // If token not in tree, add it
                 }
             }
-
         }
-        // uniqueWords = getUniqueWords(tokenList);
-
-        // System.out.println("Total Words: " + wordCount);
-        // System.out.println("Unique Words: " + uniqueWords.size());
-        // System.out.println("Stop Words: " + stopWordCount);
-
-        // orderedTkList = orderTheList(tokenList);// use this list to make the most and
-        // least
-
-        // orderLeastFreq();
-        // orderMostFreq();
-
-        // System.out.println();
-        // System.out.println("Most frequent");
-        // printMostFreq();
-
-        // System.out.println();
-        // System.out.println("Least frequent");
-        // printLeastFreq();
-
-        // System.out.println();
-        // System.out.println("All: ");
-        // printAllWords();
-
+        removeStop();
+        
         scanner.close();
 
     }
@@ -123,7 +93,13 @@ public class A3 {
      * Removes stop words from tree
      */
     private void removeStop() {
-        // TODO
+        for(String s: stopWordList) {
+        	Token token = new Token(s);
+        	Token existingNode = wordsByNaturalOrder.find(token);
+        	if (existingNode != null) {
+        		wordsByNaturalOrder.delete(existingNode);
+        	}
+        }
     }
 
     /**
@@ -134,8 +110,10 @@ public class A3 {
      * @return int - optimal height of tree
      */
     private int optHeight(int n) {
-        // TODO
-        return 0;
+    	int dividend = (int) Math.log(n);
+    	int divisor = (int) Math.log(2);
+        int result = Math.floorDiv(dividend, divisor);
+        return result;
     }
     /////
 
@@ -145,42 +123,6 @@ public class A3 {
      */
     public void saveData() {
 
-        try {
-
-            PrintWriter outputFile = new PrintWriter("projeproj/res/output.txt");
-            outputFile.println("Total Words: " + wordCount);
-            outputFile.println("Unique Words: " + uniqueWords.size());
-            outputFile.println("Stop Words: " + stopWordCount);
-
-            outputFile.println("");
-            outputFile.println("10 Most Frequent");
-
-            // add in most frequent lines in output txt
-            for (int i = 0; i < 10; i++) {
-                outputFile.println(mostFrequent.get(i).getData().format());
-
-            }
-
-            outputFile.println("");
-            outputFile.println("10 Least Frequent");
-
-            for (int i = 0; i < 10; i++) {
-                outputFile.println(leastFrequent.get(i).getData().format());
-
-            }
-
-            outputFile.println("");
-            outputFile.println("All");
-
-            for (int i = 0; i < orderedTkList.size(); i++) {
-                outputFile.println(orderedTkList.get(i).getData().format());
-
-            }
-
-            outputFile.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
     }
 
