@@ -15,7 +15,7 @@ public class Token implements Comparable<Token> {
      */
     public Token(String word) {
         this.word = word;
-        this.count = 0;
+        this.count = 1;
     }
 
     /*

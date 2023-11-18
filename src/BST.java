@@ -186,11 +186,11 @@ public class BST<T extends Comparable<T>> {
 //            }
 //        }
 //    }
-	private Queue<T> queue = new LinkedList<>();;
+	private Queue<Token> queue = new LinkedList<>();
 
 	private void visit(BSTNode r) {
 		if (r != null)
-			queue.add(r.getData());
+			queue.add((Token) r.getData());
 //			System.out.println(r.getData());
 	}
 	
@@ -210,7 +210,8 @@ public class BST<T extends Comparable<T>> {
 	public void BSTIterator() {
 		inOrderTraversal(root);
 		while(hasNext()) {
-			System.out.println(queue.poll());
+			
+			System.out.println(queue.poll().format());
 		}
 	}
 
@@ -218,7 +219,7 @@ public class BST<T extends Comparable<T>> {
 		return !queue.isEmpty();
 	}
 
-	public T getNextQueue() {
+	public Token getNextQueue() {
 		return queue.poll();
 	}
 	
