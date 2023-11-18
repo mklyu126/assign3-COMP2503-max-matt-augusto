@@ -9,7 +9,7 @@ public class BST<T extends Comparable<T>>{
 	private static final int INORDER = 1;
 	private static final int PREORDER = 2;
 	private static final int POSTORDER = 3;
-	private Queue<Token> queue;
+	
 	
 	
 	class BSTNode implements Comparable<BSTNode>{
@@ -218,9 +218,11 @@ public class BST<T extends Comparable<T>>{
 	
 	class BSTIterator<T> implements Iterator<T>{
 		
+		private Queue<T> queue;
+		
 		private void visit(BSTNode r) {
 			if (r != null)
-				queue.add((Token)r.getData());
+				queue.add((T)r.getData());
 				
 //				System.out.println(r.getData());
 		}
@@ -250,7 +252,7 @@ public class BST<T extends Comparable<T>>{
 		public T next() {
 			if(hasNext())
 			{
-				return (T)queue.poll();
+				return queue.poll();
 			}
 			throw new UnsupportedOperationException("No more elements in the iteration.");
 		}
