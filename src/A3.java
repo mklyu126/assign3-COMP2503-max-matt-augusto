@@ -22,7 +22,7 @@ public class A3 {
     private BST<Token> wordsByNaturalOrder = new BST<Token>();
     private BST<Token> wordsByFreqDesc = new BST<Token>(Token.CompFreqDesc);
     private BST<Token> wordsByFreqAsec = new BST<Token>(Token.CompFreqAsc);
-//    private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
+    private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
 
     // 103 stopwords in list
     List<String> stopWordList = new ArrayList<>(List.of(
@@ -40,7 +40,7 @@ public class A3 {
     private int wordCount = 0;
     private int stopWordCount = 0;
     
-    private final String FILE_PATH = "res/input2.txt";
+    private final String FILE_PATH = "res/input1.txt";
 //    private Scanner scanner = new Scanner(System.in);
     
     /**
@@ -80,7 +80,7 @@ public class A3 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//createFreqLists();
+		createFreqLists();
 		
     }
 
@@ -90,9 +90,28 @@ public class A3 {
      */
     private void createFreqLists() {
         // TODO
-    	Iterator<Token> bstIterator = wordsByNaturalOrder.iterator();
-    	while(bstIterator.hasNext()) {
-    		System.out.println(bstIterator.next().format());
+    	Iterator<Token> itrNatural = wordsByNaturalOrder.iterator();
+
+    	//Make the list
+    	while(itrNatural.hasNext()) {
+    		Token data = itrNatural.next();
+    		System.out.println(data.format());
+    		if(data.getCount() > 2) {
+    			wordsByFreqDesc.add(data);
+    		}
+    		wordsByLength.add(data);
+ 	}
+    	System.out.println();
+    	System.out.println("height");
+//    	
+//    	Iterator<Token> itrasc = wordsByFreqDesc.iterator();
+//    	while(itrasc.hasNext()) {
+//    		System.out.println(itrasc.next().format());
+//    	}
+    	
+    	Iterator<Token> itrheight = wordsByLength.iterator();
+    	while(itrheight.hasNext()) {
+    		System.out.println(itrheight.next().format());
     	}
     }
 
@@ -173,6 +192,6 @@ public class A3 {
     public static void main(String[] args) throws Exception {
         A3 a3 = new A3();
         a3.readFile();
-        a3.printResult();
+//        a3.printResult();
     }
 }

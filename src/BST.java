@@ -258,12 +258,6 @@ public class BST<T extends Comparable<T>>{
 		}
 	}
 
-
-
-
-	
-
-
 //	private class IteratorVisit implements Visit<T> {
 //		@Override
 //		public void visit(T data) {

@@ -54,8 +54,8 @@ public class Token implements Comparable<Token> {
      */
     public static Comparator<Token> CompLengthDesc = new Comparator<Token>() {
         public int compare(Token t1, Token t2) {
-            int freq1 = t1.getCount();
-            int freq2 = t2.getCount();
+            int freq1 = t1.getWordLength();
+            int freq2 = t2.getWordLength();
             if (freq2 - freq1 == 0) {
                 return t1.compareTo(t2);
             } else {
