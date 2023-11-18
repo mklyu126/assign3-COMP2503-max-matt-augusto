@@ -20,7 +20,8 @@ public class A3 {
      */
     private BST<Token> wordsByNaturalOrder = new BST<Token>();
     private BST<Token> wordsByFreqDesc = new BST<Token>(Token.CompFreqDesc);
-    private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
+    private BST<Token> wordsByFreqAsec = new BST<Token>(Token.CompFreqAsc);
+//    private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
 
     // 103 stopwords in list
     List<String> stopWordList = new ArrayList<>(List.of(
@@ -38,7 +39,7 @@ public class A3 {
     private int wordCount = 0;
     private int stopWordCount = 0;
     
-    private final String FILE_PATH = "res/input1.txt";
+    private final String FILE_PATH = "res/input2.txt";
 //    private Scanner scanner = new Scanner(System.in);
     
     /**
@@ -48,6 +49,7 @@ public class A3 {
      * 
      */
     private void readFile() {
+    	
     	Scanner scanner;
 		try {
 			scanner = new Scanner(new File(FILE_PATH));
@@ -55,6 +57,7 @@ public class A3 {
 	        	
 	            String word = scanner.next();
 	            word = word.trim().toLowerCase().replaceAll("[^a-z\\s]", "");
+	            
 
 	            if (word.length() > 0) {
 	                Token token = new Token(word);
@@ -75,14 +78,18 @@ public class A3 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		wordsByNaturalOrder.BSTIterator();
+		wordsByNaturalOrder.Iterator();
+		
     }
 
     /**
      * Creates the frequency and length lists
+     * 
      */
     private void createFreqLists() {
         // TODO
+    	
+    	
     }
 
     /**
@@ -95,6 +102,8 @@ public class A3 {
         return 0;
 
     }
+    
+
 
     /**
      * Removes stop words from tree

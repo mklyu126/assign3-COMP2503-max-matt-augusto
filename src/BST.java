@@ -4,14 +4,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BST<T extends Comparable<T>> {
+public class BST<T extends Comparable<T>> implements Iterator<T>  {
 	private static final int INORDER = 1;
 	private static final int PREORDER = 2;
 	private static final int POSTORDER = 3;
+	private Queue<Token> queue = new LinkedList<>();
 	
 	
-	
-	class BSTNode implements Comparable<BSTNode> {
+	class BSTNode implements Comparable<BSTNode>{
 		private T data;
 		private BSTNode left;
 		private BSTNode right;
@@ -55,12 +55,16 @@ public class BST<T extends Comparable<T>> {
 			return this.getData().compareTo(otherNode.getData());
 		}
 
+
+
 	}
 
 	private Comparator<T> comparator;
 	private BSTNode root;
 	private int size;
-
+	
+	
+	
 	public BST() {
 		root = null;
 		size = 0;
@@ -186,7 +190,8 @@ public class BST<T extends Comparable<T>> {
 //            }
 //        }
 //    }
-	private Queue<Token> queue = new LinkedList<>();
+	
+	
 
 	private void visit(BSTNode r) {
 		if (r != null)
@@ -207,21 +212,35 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 	
-	public void BSTIterator() {
+	
+	/**
+	 * This method does the printing 
+	 * @return 
+	 */
+	
+	public void Iterator() {
 		inOrderTraversal(root);
+		
+		
 		while(hasNext()) {
-			
 			System.out.println(queue.poll().format());
 		}
+		
 	}
 
 	public boolean hasNext() {
 		return !queue.isEmpty();
 	}
 
-	public Token getNextQueue() {
-		return queue.poll();
+	public T next() {
+		if(hasNext())
+		{
+			return (T)queue.poll();
+		}
+		throw new UnsupportedOperationException("No more elements in the iteration.");
 	}
+
+
 	
 
 
