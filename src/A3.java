@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -78,7 +79,7 @@ public class A3 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		wordsByNaturalOrder.Iterator();
+		createFreqLists();
 		
     }
 
@@ -88,8 +89,10 @@ public class A3 {
      */
     private void createFreqLists() {
         // TODO
-    	
-    	
+    	Iterator<Token> bstIterator = wordsByNaturalOrder.iterator();
+    	while(bstIterator.hasNext()) {
+    		System.out.println(bstIterator.next().format());
+    	}
     }
 
     /**
