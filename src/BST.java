@@ -5,208 +5,230 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BST<T extends Comparable<T>> {
-    private static final int INORDER = 1;
-    private static final int PREORDER = 2;
-    private static final int POSTORDER = 3;
-    private Queue<T> queue;
+	private static final int INORDER = 1;
+	private static final int PREORDER = 2;
+	private static final int POSTORDER = 3;
+	
+	
+	
+	class BSTNode implements Comparable<BSTNode> {
+		private T data;
+		private BSTNode left;
+		private BSTNode right;
+		
+		public BSTNode(T data) {
+			setLeft(null);
+			setRight(null);
+			setData(data);
+		}
 
-    class BSTNode implements Comparable<BSTNode> {
-        private T data;
-        private BSTNode left;
-        private BSTNode right;
+		public T getData() {
+			return data;
+		}
 
-        public BSTNode(T data) {
-            setLeft(null);
-            setRight(null);
-            setData(data);
-        }
+		public void setData(T d) {
+			data = d;
+		}
 
-        public T getData() {
-            return data;
-        }
+		public void setLeft(BSTNode leftNode) {
+			left = leftNode;
+		}
 
-        public void setData(T d) {
-            data = d;
-        }
+		public void setRight(BSTNode rightNode) {
+			right = rightNode;
+		}
 
-        public void setLeft(BSTNode leftNode) {
-            left = leftNode;
-        }
+		public BSTNode getLeft() {
+			return left;
+		}
 
-        public void setRight(BSTNode rightNode) {
-            right = rightNode;
-        }
+		public BSTNode getRight() {
+			return right;
+		}
 
-        public BSTNode getLeft() {
-            return left;
-        }
+		public boolean isLeaf() {
+			return (getLeft() == null) && (getRight() == null);
+		}
 
-        public BSTNode getRight() {
-            return right;
-        }
+		@Override
+		public int compareTo(BSTNode otherNode) {
+			return this.getData().compareTo(otherNode.getData());
+		}
 
-        public boolean isLeaf() {
-            return (getLeft() == null) && (getRight() == null);
-        }
+	}
 
-        @Override
-        public int compareTo(BSTNode otherNode) {
-            return this.getData().compareTo(otherNode.getData());
-        }
+	private Comparator<T> comparator;
+	private BSTNode root;
+	private int size;
 
-    }
+	public BST() {
+		root = null;
+		size = 0;
+	}
 
-    private Comparator<T> comparator;
-    private BSTNode root;
-    private int size;
+	public BST(Comparator<T> comparator) {
+		this.comparator = comparator;
+		root = null;
+		size = 0;
+	}
 
-    public BST() {
-        root = null;
-        size = 0;
-    }
+	public int size() {
+		return size;
+	}
 
-    public BST(Comparator<T> comparator) {
-        this.comparator = comparator;
-        root = null;
-        size = 0;
-    }
+	public void add(T data) {
+		root = add(root, data);
+		size++;
+	}
 
-    public int size() {
-        return size;
-    }
+	public T find(T data) {
+		return find(data, root);
+	}
 
-    public void add(T data) {
-        root = add(root, data);
-        size++;
-    }
+	public void delete(T data) {
+		root = delete(root, data);
+		size--;
+	}
 
-    public T find(T data) {
-        return find(data, root);
-    }
+	public int height() {
+		return height(root);
+	}
 
-    public void delete(T data) {
-        root = delete(root, data);
-        size--;
-    }
+	private BSTNode add(BSTNode curr, T data) {
+		if (curr == null) {
+			curr = new BSTNode(data);
+		} else {
+			int c;
+			if (comparator != null) {
+				c = comparator.compare(data, curr.getData());
+			} else {
+				c = data.compareTo(curr.getData());
+			}
+			if (c < 0) {
+				curr.left = add(curr.left, data);
+			} else if (c > 0) {
+				curr.right = add(curr.right, data);
+			}
+		}
+		return curr;
+	}
 
-    public int height() {
-        return height(root);
-    }
+	private T find(T data, BSTNode curr) {
+		if (curr == null) {
+			return null;
+		}
+		int c = data.compareTo(curr.getData());
 
-    private BSTNode add(BSTNode curr, T data) {
-        if (curr == null) {
-            curr = new BSTNode(data);
-        } else {
-            int c;
-            if (comparator != null) {
-                c = comparator.compare(data, curr.getData());
-            } else {
-                c = data.compareTo(curr.getData());
-            }
-            if (c < 0) {
-                curr.left = add(curr.left, data);
-            } else if (c > 0) {
-                curr.right = add(curr.right, data);
-            }
-        }
-        return curr;
-    }
+		if (c == 0) {
+			return curr.getData();
+		} else if (c < 0) {
+			return find(data, curr.getLeft());
+		} else {
+			return find(data, curr.getRight());
+		}
+	}
 
-    private T find(T data, BSTNode curr) {
-        if (curr == null) {
-            return null;
-        }
-        int c = data.compareTo(curr.getData());
+	private BSTNode delete(BSTNode curr, T data) {
+		if (curr == null) {
+			return null;
+		}
 
-        if (c == 0) {
-            return curr.getData();
-        } else if (c < 0) {
-            return find(data, curr.getLeft());
-        } else {
-            return find(data, curr.getRight());
-        }
-    }
+		int c = data.compareTo(curr.data);
 
-    private BSTNode delete(BSTNode curr, T data) {
-        if (curr == null) {
-            return null;
-        }
+		if (c < 0) {
+			curr.left = delete(curr.left, data);
+		} else if (c > 0) {
+			curr.right = delete(curr.right, data);
+		} else {
+			if (curr.left == null) {
+				return curr.right;
+			} else if (curr.right == null) {
+				return curr.left;
+			}
 
-        int c = data.compareTo(curr.data);
+			curr.data = findMin(curr.right);
+			curr.right = delete(curr.right, curr.data);
+		}
+		return curr;
+	}
 
-        if (c < 0) {
-            curr.left = delete(curr.left, data);
-        } else if (c > 0) {
-            curr.right = delete(curr.right, data);
-        } else {
-            if (curr.left == null) {
-                return curr.right;
-            } else if (curr.right == null) {
-                return curr.left;
-            }
+	private T findMin(BSTNode curr) {
+		while (curr.left != null) {
+			curr = curr.left;
+		}
+		return curr.data;
+	}
 
-            curr.data = findMin(curr.right);
-            curr.right = delete(curr.right, curr.data);
-        }
-        return curr;
-    }
+	private int height(BSTNode curr) {
+		if (curr == null) {
+			return -1;
+		}
+		int leftHeight = height(curr.left);
+		int rightHeight = height(curr.right);
 
-    private T findMin(BSTNode curr) {
-        while (curr.left != null) {
-            curr = curr.left;
-        }
-        return curr.data;
-    }
+		return Math.max(leftHeight, rightHeight) + 1;
+	}
 
-    private int height(BSTNode curr) {
-        if (curr == null) {
-            return -1;
-        }
-        int leftHeight = height(curr.left);
-        int rightHeight = height(curr.right);
+//    private void traverse(BSTNode root, int order, Visit<T> visit) {
+//        if (root != null) {
+//            if (order == INORDER) {
+//                traverse(root.getLeft(), order, visit);
+//                visit.visit(root.getData());
+//                traverse(root.getRight(), order, visit);
+//            } else if (order == PREORDER) {
+//                visit.visit(root.getData());
+//                traverse(root.getLeft(), order, visit);
+//                traverse(root.getRight(), order, visit);
+//            } else if (order == POSTORDER) {
+//                traverse(root.getLeft(), order, visit);
+//                traverse(root.getRight(), order, visit);
+//                visit.visit(root.getData());
+//            }
+//        }
+//    }
+	private Queue<T> queue = new LinkedList<>();;
 
-        return Math.max(leftHeight, rightHeight) + 1;
-    }
+	private void visit(BSTNode r) {
+		if (r != null)
+			queue.add(r.getData());
+//			System.out.println(r.getData());
+	}
+	
 
-    private void traverse(BSTNode root, int order, Visit<T> visit) {
-        if (root != null) {
-            if (order == INORDER) {
-                traverse(root.getLeft(), order, visit);
-                visit.visit(root.getData());
-                traverse(root.getRight(), order, visit);
-            } else if (order == PREORDER) {
-                visit.visit(root.getData());
-                traverse(root.getLeft(), order, visit);
-                traverse(root.getRight(), order, visit);
-            } else if (order == POSTORDER) {
-                traverse(root.getLeft(), order, visit);
-                traverse(root.getRight(), order, visit);
-                visit.visit(root.getData());
-            }
-        }
-    }
+	private void inOrderTraversal(BSTNode r) {
+		
+		if (r == null)
+			return;
+		else {
+			
+			inOrderTraversal(r.getLeft());
+			visit(r);
+			inOrderTraversal(r.getRight());
+		}
+	}
+	
+	public void BSTIterator() {
+		inOrderTraversal(root);
+		while(hasNext()) {
+			System.out.println(queue.poll());
+		}
+	}
 
-    private class BSTIterator implements Iterator<T> {
+	public boolean hasNext() {
+		return !queue.isEmpty();
+	}
 
-        public BSTIterator() {
-            queue = new LinkedList<>();
-            traverse(root, INORDER, new IteratorVisit());
-        }
+	public T getNextQueue() {
+		return queue.poll();
+	}
+	
 
-        public boolean hasNext() {
-            return !queue.isEmpty();
-        }
 
-        public T next() {
-            return queue.poll();
-        }
-    }
-
-    private class IteratorVisit implements Visit<T> {
-        @Override
-        public void visit(T data) {
-            queue.add(data);
-        }
-    }
+//	private class IteratorVisit implements Visit<T> {
+//		@Override
+//		public void visit(T data) {
+//			queue.add(data);
+//		}
+//	}
 
 }

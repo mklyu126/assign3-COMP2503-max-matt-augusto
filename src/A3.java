@@ -37,9 +37,10 @@ public class A3 {
 
     private int wordCount = 0;
     private int stopWordCount = 0;
-
-    private Scanner scanner = new Scanner(System.in);
-
+    
+    private final String FILE_PATH = "res/input1.txt";
+//    private Scanner scanner = new Scanner(System.in);
+    
     /**
      * Reads file from txt word by word
      * Trims word of trailing and leading blanks, converts it to lowercase, and
@@ -47,28 +48,34 @@ public class A3 {
      * 
      */
     private void readFile() {
+    	Scanner scanner;
+		try {
+			scanner = new Scanner(new File(FILE_PATH));
+	        while (scanner.hasNext()) {
+	        	
+	            String word = scanner.next();
+	            word = word.trim().toLowerCase().replaceAll("[^a-z\\s]", "");
 
-        while (scanner.hasNext()) {
+	            if (word.length() > 0) {
+	                Token token = new Token(word);
+	                // Check if token is already in tree
+	                Token existingNode = wordsByNaturalOrder.find(token);
 
-            String word = scanner.next();
-            word = word.trim().toLowerCase().replaceAll("[^a-z\\s]", "");
-
-            if (word.length() > 0) {
-                Token token = new Token(word);
-                // Check if token is already in tree
-                Token existingNode = wordsByNaturalOrder.find(token);
-
-                if (existingNode != null) { // If token already in tree increase freauency
-                    existingNode.increaseCount();
-                } else {
-                    wordsByNaturalOrder.add(token); // If token not in tree, add it
-                }
-            }
-        }
-        removeStop();
-        
-        scanner.close();
-
+	                if (existingNode != null) { // If token already in tree increase freauency
+	                    existingNode.increaseCount();
+	                } else {
+	                    wordsByNaturalOrder.add(token); // If token not in tree, add it
+	                }
+	            }
+	        }
+	        removeStop();
+	        
+	        scanner.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		wordsByNaturalOrder.BSTIterator();
     }
 
     /**
