@@ -172,7 +172,7 @@ public class BST<T extends Comparable<T>>{
 		int leftHeight = height(curr.left);
 		int rightHeight = height(curr.right);
 
-		return Math.max(leftHeight, rightHeight) + 1;
+		return 1 + Math.max(leftHeight, rightHeight);
 	}
 
 //    private void traverse(BSTNode root, int order, Visit<T> visit) {

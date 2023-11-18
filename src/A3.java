@@ -61,6 +61,7 @@ public class A3 {
 	            
 
 	            if (word.length() > 0) {
+	            	wordCount += 1;
 	                Token token = new Token(word);
 	                // Check if token is already in tree
 	                Token existingNode = wordsByNaturalOrder.find(token);
@@ -79,7 +80,7 @@ public class A3 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		createFreqLists();
+		//createFreqLists();
 		
     }
 
@@ -101,8 +102,15 @@ public class A3 {
      * @return avgLength of words
      */
     private int avgLength() {
-        // TODO
-        return 0;
+    	int lengthSum = 0;
+    	if(wordsByNaturalOrder.size() != 0) {
+	    	Iterator<Token> bstIterator = wordsByNaturalOrder.iterator();
+	    	while(bstIterator.hasNext()) {
+	    		lengthSum += bstIterator.next().getWordLength();
+	    	}
+	        return lengthSum/wordsByNaturalOrder.size();
+    	}
+    	return 0;
 
     }
     
@@ -117,6 +125,7 @@ public class A3 {
         	Token existingNode = wordsByNaturalOrder.find(token);
         	if (existingNode != null) {
         		wordsByNaturalOrder.delete(existingNode);
+        		stopWordCount += 1;
         	}
         }
     }
@@ -129,10 +138,7 @@ public class A3 {
      * @return int - optimal height of tree
      */
     private int optHeight(int n) {
-    	int dividend = (int) Math.log(n);
-    	int divisor = (int) Math.log(2);
-        int result = Math.floorDiv(dividend, divisor);
-        return result;
+        return (int) (Math.log(n)/Math.log(2));
     }
     /////
 
@@ -140,9 +146,25 @@ public class A3 {
      * Saves the lists of words to an external text file called output.txt
      * the output file has the correct format and ordering
      */
-    public void saveData() {
-
-
+    public void printResult() {
+    	 System.out.println("Total Words: " + wordCount);
+         System.out.println("Unique Words: " + wordsByNaturalOrder.size());
+         System.out.println("Stop Words: " + stopWordCount + "\n");
+         
+         System.out.println("10 Most Frequent\n");
+         System.out.println("10 Longest\n");
+         
+         System.out.println("The longest word is");
+         System.out.println("The average word length is " + avgLength() + "\n");
+         
+         System.out.println("All");
+         
+         System.out.println();
+         
+         System.out.println("Alphabetic Tree: (Optimum Height: " + optHeight(wordsByNaturalOrder.size()) + 
+        		 			") (Actual Height: " + wordsByNaturalOrder.height() + ")");
+         System.out.println("Frequency Tree: (Optimum Height: -1) (Actual Height: -1)");
+         System.out.println("Length Tree: (Optimum Height: 5) (Actual Height: 17)");
     }
 
     /**
@@ -151,6 +173,6 @@ public class A3 {
     public static void main(String[] args) throws Exception {
         A3 a3 = new A3();
         a3.readFile();
-        a3.saveData();
+        a3.printResult();
     }
 }

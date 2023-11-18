@@ -113,6 +113,6 @@ public class Token implements Comparable<Token> {
     }
 
     public String format() {
-        return this.word + " : " + this.count;
+        return this.word + " : " + getWordLength() + " : " + this.count;
     }
 }
