@@ -209,6 +209,10 @@ public class A3 {
 				+ ") (Actual Height: " + wordsByLength.height() + ")");
 	}
 	
+	/**
+	 * temporary method just to text input 3 should be deleted later
+	 * @throws FileNotFoundException
+	 */
 	public void saveResult() throws FileNotFoundException {
 		Token tk = new Token(null);
 		PrintWriter outputFile = new PrintWriter("res/output.txt");
