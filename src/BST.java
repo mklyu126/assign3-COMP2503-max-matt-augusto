@@ -140,7 +140,7 @@ public class BST<T extends Comparable<T>>{
 		}
 
 		int c = data.compareTo(curr.data);
-
+		
 		if (c < 0) {
 			curr.left = delete(curr.left, data);
 		} else if (c > 0) {
@@ -151,16 +151,15 @@ public class BST<T extends Comparable<T>>{
 			} else if (curr.right == null) {
 				return curr.left;
 			}
-
-			curr.data = findMin(curr.right);
-			curr.right = delete(curr.right, curr.data);
+			curr.data = findMin(curr.left);
+			curr.left = delete(curr.left, curr.data);
 		}
 		return curr;
 	}
 
 	private T findMin(BSTNode curr) {
-		while (curr.left != null) {
-			curr = curr.left;
+		while (curr.right != null) {
+			curr = curr.right;
 		}
 		return curr.data;
 	}

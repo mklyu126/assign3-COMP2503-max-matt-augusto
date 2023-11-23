@@ -15,7 +15,7 @@ The ants behave according to the following model:
 
  This is simulated by creating a new ant in an adjacent (up, down, left, or right) cell that is empty. If there is no empty cell 
  available, no breeding occurs. Once an offspring is produced, the ant cannot produce an offspring until three more time steps have elapsed. 
-
+a
   The doodlebugs behave according to the following model: Move. Every time step, if there is an adjacent cell (up, down, left, or right) occupied by 
   an ant then the doodlebug will move to that cell and eat the ant. Otherwise, the doodlebug moves according to the same rules as the ant. 
   Note that a doodlebug cannot eat other doodlebugs. 

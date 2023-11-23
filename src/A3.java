@@ -36,7 +36,7 @@ public class A3 {
 	private int wordCount = 0;
 	private int stopWordCount = 0;
 
-	private final String FILE_PATH = "res/input3.txt";
+	private final String FILE_PATH = "res/input2.txt";
 //    private Scanner scanner = new Scanner(System.in);
 
 	/**
