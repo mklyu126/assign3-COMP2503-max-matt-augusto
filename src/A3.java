@@ -34,7 +34,7 @@ public class A3 {
 	private int wordCount = 0;
 	private int stopWordCount = 0;
 
-	private final String FILE_PATH = "res/input2.txt";
+	private final String FILE_PATH = "res/input1.txt";
 //    private Scanner scanner = new Scanner(System.in);
 
 	/**
@@ -45,32 +45,28 @@ public class A3 {
 	private void readFile() {
 
 		Scanner scanner;
-		try {
-			scanner = new Scanner(new File(FILE_PATH));
-			while (scanner.hasNext()) {
+		scanner = new Scanner(System.in);
+		while (scanner.hasNext()) {
 
-				String word = scanner.next();
-				word = word.trim().toLowerCase().replaceAll("[^a-z\\s]", "");
+			String word = scanner.next();
+			word = word.trim().toLowerCase().replaceAll("[^a-z\\s]", "");
 
-				if (word.length() > 0) {
-					wordCount += 1;
-					Token token = new Token(word);
-					// Check if token is already in tree
-					Token existingNode = wordsByNaturalOrder.find(token);
+			if (word.length() > 0) {
+				wordCount += 1;
+				Token token = new Token(word);
+				// Check if token is already in tree
+				Token existingNode = wordsByNaturalOrder.find(token);
 
-					if (existingNode != null) { // If token already in tree increase frequency
-						existingNode.increaseCount();
-					} else {
-						wordsByNaturalOrder.add(token); // If token not in tree, add it
-					}
+				if (existingNode != null) { // If token already in tree increase frequency
+					existingNode.increaseCount();
+				} else {
+					wordsByNaturalOrder.add(token); // If token not in tree, add it
 				}
 			}
-			removeStop();
-
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}
+		removeStop();
+
+		scanner.close();
 		createFreqLists();
 
 	}
@@ -147,8 +143,8 @@ public class A3 {
 		Token tk = new Token(null);
 		System.out.println("Total Words: " + wordCount);
 		System.out.println("Unique Words: " + wordsByNaturalOrder.size());
-		System.out.println("Stop Words: " + stopWordCount + "\n");
-
+		System.out.println("Stop Words: " + stopWordCount);
+		System.out.println();
 		System.out.println("10 Most Frequent");
 		
 		int count = 0;
@@ -178,7 +174,8 @@ public class A3 {
 		System.out.println();
 		
 		System.out.println("The longest word is " + tk.format());
-		System.out.println("The average word length is " + avgLength() + "\n");
+		System.out.println("The average word length is " + avgLength());
+		System.out.println();
 
 		System.out.println("All");
 		
