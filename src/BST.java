@@ -1,22 +1,27 @@
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ *Binary Search Tree class that have all methods to 
+ *build, organize, and manage one BST
+ */
 public class BST<T extends Comparable<T>>{
-	private static final int INORDER = 1;
-	private static final int PREORDER = 2;
-	private static final int POSTORDER = 3;
 	
-	
-	
+	/**
+	 * A node class necessary for the BST class 
+	 */
 	class BSTNode implements Comparable<BSTNode>{
 		private T data;
 		private BSTNode left;
 		private BSTNode right;
 		
+		/**
+		 * Constructor
+		 * @param data is any type of data
+		 */
 		public BSTNode(T data) {
 			setLeft(null);
 			setRight(null);
@@ -46,11 +51,18 @@ public class BST<T extends Comparable<T>>{
 		public BSTNode getRight() {
 			return right;
 		}
-
+		
+		/**
+		 * Method identify if the node is a leaf
+		 * @return true if its a leaf and false otherwise
+		 */
 		public boolean isLeaf() {
 			return (getLeft() == null) && (getRight() == null);
 		}
-
+		
+		/**
+		 * Overrides the compareTo method to organize the nodes in the tree
+		 */
 		@Override
 		public int compareTo(BSTNode otherNode) {
 			return this.getData().compareTo(otherNode.getData());
@@ -65,40 +77,68 @@ public class BST<T extends Comparable<T>>{
 	private int size;
 	
 	
-	
+	/**
+	 * Constructor
+	 */
 	public BST() {
 		
 		root = null;
 		size = 0;
 	}
-
+	
+	/**
+	 * Copy constructor used when the tree needs a different ordering
+	 * @param comparator is any type of comparator
+	 */
 	public BST(Comparator<T> comparator) {
 		this.comparator = comparator;
 		root = null;
 		size = 0;
 	}
-
+	
+	/**
+	 * Size method that returns the size of the tree
+	 * @return size of the tree
+	 */
 	public int size() {
 		return size;
 	}
 
+	/**
+	 * Add method used to add data to the tree
+	 * @param data is any type of data
+	 */
 	public void add(T data) {
 		root = add(root, data);
 		size++;
 	}
-
+	
+	/**
+	 * Find method can find any data that is in the tree
+	 * @param data is any type of data
+	 * @return true if the data is in the tree or false otherwise
+	 */
 	public T find(T data) {
 		return find(data, root);
 	}
-
+	
+	/**
+	 * Delete method is used to delete data from the tree
+	 * @param data is any type of data
+	 */
 	public void delete(T data) {
 		root = delete(root, data);
 		size--;
 	}
-
+	
+	/**
+	 * Height method gives the height of the tree
+	 * @return height of the tree
+	 */
 	public int height() {
 		return height(root);
 	}
+	
 
 	private BSTNode add(BSTNode curr, T data) {
 		if (curr == null) {
@@ -156,7 +196,13 @@ public class BST<T extends Comparable<T>>{
 		}
 		return curr;
 	}
-
+	
+	/**
+	 * Method that finds the last member of the right part of a node 
+	 * that is passed to the method
+	 * @param curr is a node
+	 * @return the last node data in the right tree
+	 */
 	private T findMin(BSTNode curr) {
 		while (curr.right != null) {
 			curr = curr.right;
@@ -174,59 +220,37 @@ public class BST<T extends Comparable<T>>{
 		return 1 + Math.max(leftHeight, rightHeight);
 	}
 
-//    private void traverse(BSTNode root, int order, Visit<T> visit) {
-//        if (root != null) {
-//            if (order == INORDER) {
-//                traverse(root.getLeft(), order, visit);
-//                visit.visit(root.getData());
-//                traverse(root.getRight(), order, visit);
-//            } else if (order == PREORDER) {
-//                visit.visit(root.getData());
-//                traverse(root.getLeft(), order, visit);
-//                traverse(root.getRight(), order, visit);
-//            } else if (order == POSTORDER) {
-//                traverse(root.getLeft(), order, visit);
-//                traverse(root.getRight(), order, visit);
-//                visit.visit(root.getData());
-//            }
-//        }
-//    }
-	
-	
-
-
-	
-	
 	/**
-	 * This method does the printing 
-	 * @return 
+	 * Method that calls an iterator for the tree
+	 * @return a new iterator for the tree
 	 */
 	public Iterator<T> iterator(){
 		return new BSTIterator<>(root);
 		
 	}
-//	public T Iterator() {
-//		inOrderTraversal(root);
-//		
-//		
-//		while(hasNext()) {
-//			return (T) queue.poll().toString();
-//		}
-		
-//	}
-	
+
+	/**
+	 * BSTIterator class is a personalized class to iterate 
+	 * throughout the trees
+	 */
 	class BSTIterator<T> implements Iterator<T>{
 		
 		private Queue<T> queue;
 		
+		/**
+		 * Check if the node has data, and if there is add it to a queue
+		 * @param r is a node from the tree
+		 */
 		private void visit(BSTNode r) {
 			if (r != null)
-				queue.add((T)r.getData());
+				queue.add((T) r.getData());
 				
-//				System.out.println(r.getData());
 		}
 		
-
+		/**
+		 * Check every node of the tree in order from the least to most
+		 * @param r is a node from the tree
+		 */
 		private void inOrderTraversal(BSTNode r) {
 			
 			if (r == null)
@@ -239,15 +263,27 @@ public class BST<T extends Comparable<T>>{
 			}
 		}
 		
+		/**
+		 * Constructor
+		 * @param root is a node
+		 */
 		public BSTIterator(BSTNode root) {
 			queue = new LinkedList<>();
 			inOrderTraversal(root);
 		}
 		
+		/**
+		 * Checks if the node has a next 
+		 * @return true if there is a next and false otherwise
+		 */
 		public boolean hasNext() {
 			return !queue.isEmpty();
 		}
-
+		
+		/**
+		 * Checks if the node has a next but instead of returning true or false,
+		 * it retrieve and removes the data in the head of the queue
+		 */
 		public T next() {
 			if(hasNext())
 			{
@@ -256,12 +292,5 @@ public class BST<T extends Comparable<T>>{
 			throw new UnsupportedOperationException("No more elements in the iteration.");
 		}
 	}
-
-//	private class IteratorVisit implements Visit<T> {
-//		@Override
-//		public void visit(T data) {
-//			queue.add(data);
-//		}
-//	}
 
 }

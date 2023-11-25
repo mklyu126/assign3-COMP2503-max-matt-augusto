@@ -1,1 +1,1 @@
-typeSearchIndex = [{"p":"mru.application","l":"A2"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"mru.application","l":"LeastFrequentWordComparator"},{"p":"mru.application","l":"MostFrequentWordComparator"},{"p":"mru.application","l":"Node"},{"p":"mru.application","l":"SLL"},{"p":"mru.application","l":"Token"}];updateSearchResults();
+typeSearchIndex = [{"p":"<Unnamed>","l":"A3"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"BST"},{"p":"<Unnamed>","l":"Token"}];updateSearchResults();

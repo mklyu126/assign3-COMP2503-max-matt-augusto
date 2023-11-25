@@ -1,9 +1,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +21,7 @@ public class A3 {
 	private BST<Token> wordsByFreqDesc = new BST<Token>(Token.CompFreqDesc);
 	private BST<Token> wordsByLength = new BST<Token>(Token.CompLengthDesc);
 
-	// 103 stopwords in list
+	// 103 stop words in list
 	List<String> stopWordList = new ArrayList<>(List.of("a", "about", "all", "am", "an", "and", "any", "are", "as",
 			"at", "be", "been", "but", "by", "can", "cannot", "could", "did", "do", "does", "else", "for", "from",
 			"get", "got", "had", "has", "have", "he", "her", "hers", "him", "his", "how", "i", "if", "in", "into", "is",
@@ -60,7 +58,7 @@ public class A3 {
 					// Check if token is already in tree
 					Token existingNode = wordsByNaturalOrder.find(token);
 
-					if (existingNode != null) { // If token already in tree increase freauency
+					if (existingNode != null) { // If token already in tree increase frequency
 						existingNode.increaseCount();
 					} else {
 						wordsByNaturalOrder.add(token); // If token not in tree, add it
@@ -71,7 +69,6 @@ public class A3 {
 
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		createFreqLists();
@@ -80,11 +77,8 @@ public class A3 {
 
 	/**
 	 * Creates the frequency and length trees
-	 * 
 	 */
 	private void createFreqLists() {
-		//Increment amount of words allowed in an array
-		int counter = 0;
 
 		Iterator<Token> itrNatural = wordsByNaturalOrder.iterator();
 
@@ -96,7 +90,6 @@ public class A3 {
 				wordsByFreqDesc.add(data);
 			}
 			wordsByLength.add(data);
-			counter ++;
 		}
 		
 		
@@ -146,11 +139,9 @@ public class A3 {
 		}
 		return -1;
 	}
-	/////
 
 	/**
-	 * Saves the lists of words to an external text file called output.txt the
-	 * output file has the correct format and ordering
+	 * Organize the printing to have the correct format and output
 	 */
 	public void printResult() {
 		Token tk = new Token(null);
@@ -210,76 +201,11 @@ public class A3 {
 	}
 	
 	/**
-	 * temporary method just to text input 3 should be deleted later
-	 * @throws FileNotFoundException
-	 */
-	public void saveResult() throws FileNotFoundException {
-		Token tk = new Token(null);
-		PrintWriter outputFile = new PrintWriter("res/output.txt");
-		outputFile.println("Total Words: " + wordCount);
-		outputFile.println("Unique Words: " + wordsByNaturalOrder.size());
-		outputFile.println("Stop Words: " + stopWordCount + "\n");
-
-		outputFile.println("10 Most Frequent");
-		
-		int count = 0;
-		Iterator<Token> itrMostReq = wordsByFreqDesc.iterator();
-		while(itrMostReq.hasNext() && count < 10){
-			outputFile.println(itrMostReq.next().format());
-			count++;
-		}
-		outputFile.println();
-		
-		
-		outputFile.println("10 Longest");
-		
-		int count2 = 0;
-		Iterator<Token> itrMostLen = wordsByLength.iterator();
-		while(itrMostLen.hasNext() && count2 < 10) {
-			if (count2 == 0) {
-				tk = itrMostLen.next();
-				outputFile.println(tk.format());
-				count2++;
-			} else {
-				outputFile.println(itrMostLen.next().format());
-				count2++;
-			}
-		}
-		
-		outputFile.println();
-		
-		outputFile.println("The longest word is " + tk.format());
-		outputFile.println("The average word length is " + avgLength() + "\n");
-
-		outputFile.println("All");
-		
-		Iterator<Token> bstIterator = wordsByNaturalOrder.iterator();
-		while (bstIterator.hasNext()) {
-			outputFile.println(bstIterator.next().format());
-		}
-		
-		outputFile.println();
-
-		outputFile.println("Alphabetic Tree: (Optimum Height: " + optHeight(wordsByNaturalOrder.size())
-				+ ") (Actual Height: " + wordsByNaturalOrder.height() + ")");
-		
-		
-		outputFile.println("Frequency Tree: (Optimum Height: " + optHeight(wordsByFreqDesc.size()) 
-				+ ") (Actual Height: " + wordsByFreqDesc.height() + ")");
-		
-		outputFile.println("Length Tree: (Optimum Height: " + optHeight(wordsByLength.size()) 
-				+ ") (Actual Height: " + wordsByLength.height() + ")");
-		
-		outputFile.close();
-	}
-
-	/**
 	 * Main method that initiates the program
 	 */
 	public static void main(String[] args) throws Exception {
 		A3 a3 = new A3();
 		a3.readFile();
-        //a3.printResult();
-		a3.saveResult();
+        a3.printResult();
 	}
 }

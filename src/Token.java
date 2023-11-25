@@ -84,15 +84,17 @@ public class Token implements Comparable<Token> {
         count++;
     }
 
+    /**
+     * Compares two words
+     */
     @Override
     public int compareTo(Token anotherToken) {
-        /**
-         * Compares two words
-         */
-
         return (this.getWord().compareTo(anotherToken.getWord()));
     }
-
+    
+    /**
+     * Overrides equals method to just analyze token objects
+     */
     @Override
     public boolean equals(Object obj) {
 
@@ -111,7 +113,11 @@ public class Token implements Comparable<Token> {
     public String toString() {
         return this.word;
     }
-
+    
+    /**
+     * Formats the output string for Token objects
+     * @return String with the right format
+     */
     public String format() {
         return this.word + " : " + getWordLength() + " : " + this.count;
     }
