@@ -34,15 +34,13 @@ public class A3 {
 	private int wordCount = 0;
 	private int stopWordCount = 0;
 
-	private final String FILE_PATH = "res/input1.txt";
-//    private Scanner scanner = new Scanner(System.in);
-
 	/**
 	 * Reads file from txt word by word Trims word of trailing and leading blanks,
 	 * converts it to lowercase, and removes any punctuation/digits
+	 * @throws FileNotFoundException 
 	 * 
 	 */
-	private void readFile() {
+	private void readFile() throws FileNotFoundException {
 
 		Scanner scanner;
 		scanner = new Scanner(System.in);
@@ -173,7 +171,11 @@ public class A3 {
 		
 		System.out.println();
 		
-		System.out.println("The longest word is " + tk.format());
+		if(tk.getWord() == null) {
+			System.out.println("The longest word is ");
+		} else {
+			System.out.println("The longest word is " + tk.format());
+		}
 		System.out.println("The average word length is " + avgLength());
 		System.out.println();
 
